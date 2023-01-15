@@ -15,6 +15,7 @@ from pyrogram.types import Message
 from config import BANNED_USERS, MUSIC_BOT_NAME, PING_IMG_URL
 from strings import get_command
 from YukkiMusic import app
+from strings.filters import command
 from YukkiMusic.core.call import Yukki
 from YukkiMusic.utils import bot_sys_stats
 from YukkiMusic.utils.decorators.language import language
@@ -26,6 +27,24 @@ PING_COMMAND = get_command("PING_COMMAND")
 @app.on_message(
     filters.command(PING_COMMAND)
     & filters.group
+    & ~filters.edited
+    & ~BANNED_USERS
+)
+@app.on_message(
+    filters.command(PING_COMMAND)
+    & filters.private
+    & ~filters.edited
+    & ~BANNED_USERS
+)
+@app.on_message(
+    command(["بنك","بنغ"])
+    & filters.group
+    & ~filters.edited
+    & ~BANNED_USERS
+)
+@app.on_message(
+    command(["بنك","بنغ"])
+    & filters.channel
     & ~filters.edited
     & ~BANNED_USERS
 )
